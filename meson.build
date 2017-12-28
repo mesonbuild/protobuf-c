@@ -15,6 +15,8 @@ libprotobuf_c = library('protobuf-c',
                         cpp_args: [],
                         dependencies: protobuf_deps,
                         include_directories: include_directories('protobuf-c'))
+protobuf_c_dep = declare_dependency(link_with: libprotobuf_c,
+                                    include_directories: include_directories('.'))
 
 protoc_c_src = [
   'protoc-c/c_bytes_field.cc',
