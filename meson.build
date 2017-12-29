@@ -7,12 +7,14 @@ libprotobuf_c_src = [
   'protobuf-c/protobuf-c.c',
 ]
 
+protobuf_c_flags = [ '-Wno-unused-parameter' ]
+
 protobuf_deps = dependency('protobuf',
                            fallback: ['protobuf', 'protobuf_dep'],
                            version: '>= 3.0.0')
 libprotobuf_c = library('protobuf-c',
                         libprotobuf_c_src,
-                        cpp_args: [],
+                        cpp_args: protobuf_c_flags,
                         dependencies: protobuf_deps,
                         include_directories: include_directories('protobuf-c'))
 protobuf_c_dep = declare_dependency(link_with: libprotobuf_c,
@@ -41,7 +43,7 @@ protoc_deps = dependency('protobuf',
 
 protoc_c = executable('protoc-c',
                       protoc_c_src,
-                      cpp_args: '-DPACKAGE_STRING="protobuf-c"',
+                      cpp_args: [protobuf_c_flags, '-DPACKAGE_STRING="protobuf-c"'],
                       include_directories: include_directories('protoc-c',
                                                                'protobuf-c'),
                       dependencies: protoc_deps)
